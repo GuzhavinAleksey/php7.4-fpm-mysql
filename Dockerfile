@@ -16,60 +16,23 @@ RUN set -ex; \
 	\
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
-    wget \
-    npm \
-    apt-utils \
-    gnupg \
-    cron \
-    libxslt-dev \
-    software-properties-common \
-    apt-transport-https \
-    libxml2-dev \
-    unixodbc-dev \
-    libzip-dev\	
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libmagickwand-dev \
-    libmcrypt-dev \
-    zlib1g-dev \
-    libicu-dev \
-    g++ \
-    unixodbc-dev \
-    && apt-get install --no-install-recommends -y libxml2-dev \
-    libaio-dev \
-    libmemcached-dev \
-    freetds-dev \
-    libssl-dev \
-    openssl \
-    supervisor\
+		libfreetype6-dev \
+		libjpeg-dev \
+		libmagickwand-dev \
+		libpng-dev \
+		libzip-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-freetype --with-jpeg; \
 	docker-php-ext-install -j "$(nproc)" \
-        iconv \
-        sockets \
-        pdo \
-        gd \
-        pdo_mysql \
-        gettext \
-        mbstring \
-        mysqli \
-        xsl \
-        exif \
-        xml \
-        zip \
-        bcmath \
-        xmlrpc \
-	    intl \
-        soap \
-        opcache \
+		bcmath \
+		exif \
+		gd \
+		mysqli \
+		zip \
 	; \
 	pecl install imagick-3.4.4; \
-	pecl install redis; \
 	docker-php-ext-enable imagick; \
-	docker-php-ext-enable redis; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	apt-mark auto '.*' > /dev/null; \
@@ -110,7 +73,6 @@ RUN { \
 		echo 'ignore_repeated_source = Off'; \
 		echo 'html_errors = Off'; \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
-
 
 
 CMD ["php-fpm"]
